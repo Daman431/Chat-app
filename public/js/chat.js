@@ -7,8 +7,13 @@ socket.on('userConnection',(welcomeMessage)=>{
 
 document.getElementById("userMessage").addEventListener("keydown",(event)=>{
     if(event.which == 13 || event.keyCode == 13){
-        console.log("key pressed!");
         sendMessage();
+    }
+})
+
+document.getElementById("username").addEventListener("keydown",(event)=>{
+    if(event.which == 13 || event.keyCode == 13){
+        setUsername();
     }
 })
 
@@ -19,6 +24,10 @@ const setUsername = ()=>{
     let data = {
         username: this.username.value,
         message:`${this.username.value} has joined the chat!`
+    }
+    if(!document.getElementById("username").value){
+        document.getElementById("username").placeholder = 'Enter Some value!';
+        return null;
     }
     document.getElementsByClassName("main-container")[0].style = "display:flex";
     document.getElementsByClassName("userInput-container")[0].style = "display:none"
@@ -31,6 +40,9 @@ const sendMessage = ()=>{
     let data = {
         message : message,
         username: this.username.value
+    }
+    if(!document.querySelector('#userMessage').value){
+        return null;
     }
     socket.emit('emitMessage',data);
     document.getElementById("userMessage").value = ''
