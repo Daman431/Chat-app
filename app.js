@@ -3,7 +3,7 @@ const path = require('path')
 const socketio = require('socket.io');
 const http = require('http')
 
-const port = 3000;
+const PORT = process.env.PORT || 3000;
 
 app = express();
 const server = http.createServer(app);
@@ -30,6 +30,6 @@ io.on('connection',(socket)=>{
 app.use(express.static(path.join(__dirname,'/public')))
 
 
-server.listen(port,()=>{
-    console.log(`App is running on port:${port}`);
+server.listen(PORT,()=>{
+    console.log(`App is running on port:${PORT}`);
 })
