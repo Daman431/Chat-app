@@ -7,15 +7,38 @@
     padding: 20px;
 }
 .main-container{
-    height: 100vh;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    display: none;
 }
 .message-box{
     margin-top: 40px;
     padding: 0;
     width: 51vw;
+}
+.message-container{
+    padding: 1%;
+    overflow-wrap: break-word;
+    width: max-content;
+    max-width: 50%;
+    border: solid 2px gray;
+    margin: 5px;
+    margin-top: 30px;
+    border-radius: 10px;
+    position: relative;
+}
+.username-container{
+    position: absolute;
+    top: -25px;
+    font-weight: 500;
+    color: green;
+    z-index: 10;
+}
+.userInput-container{
+    display: flex;
+    width: 100%;
+    justify-content: center;
 }

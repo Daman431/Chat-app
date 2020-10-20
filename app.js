@@ -15,8 +15,9 @@ io.on('connection',(socket)=>{
 
     socket.emit('userConnection',usermessage);
     socket.broadcast.emit("userConnection","A new user connected!")
-    socket.on('emitMessage',(message)=>{
-        io.emit('getMessage',message);
+    socket.on('emitMessage',(data)=>{
+        console.log(data.username);
+        io.emit('getMessage',data);
     })
 
     socket.on('disconnect',()=>{
