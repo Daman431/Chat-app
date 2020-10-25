@@ -1,9 +1,8 @@
 const socket = io();
 
-socket.on('userConnection',(welcomeMessage)=>{
-    console.log(welcomeMessage);
-})
 
+
+// Submit by enter
 
 document.getElementById("userMessage").addEventListener("keydown",(event)=>{
     if(event.which == 13 || event.keyCode == 13){
@@ -17,21 +16,24 @@ document.getElementById("username").addEventListener("keydown",(event)=>{
     }
 })
 
-
+//Set Username In the chat
 
 let username = document.getElementById("username").value;
+console.log(username);
 const setUsername = ()=>{
     let data = {
         username: this.username.value,
-        message:`${this.username.value} has joined the chat!`
+        message:`📢 ${this.username.value} has joined the chat!`
     }
     if(!document.getElementById("username").value){
-        document.getElementById("username").placeholder = 'Enter Some value!';
+        document.getElementById("username").placeholder = 'Missing!';
         return null;
     }
+
+    //Toggle classes
     document.getElementsByClassName("main-container")[0].style = "display:flex";
     document.getElementsByClassName("userInput-container")[0].style = "display:none"
-    socket.emit('emitMessage',data);
+    socket.emit('login',data);
 }
 
 
@@ -48,18 +50,25 @@ const sendMessage = ()=>{
     document.getElementById("userMessage").value = ''
 }
 
+//On disconnection
 
-socket.on("disconnection",(disconnectionMessage)=>{
-    console.log(disconnectionMessage)
+socket.on("disconnection",(data)=>{
+    console.log(data)
+    printMessage(data)
 })
 
 
+//Get and Create the Message
 
 let chatContainer = document.querySelector(".chat-container");
-socket.on('getMessage',(data)=>{
+socket.on('getMessage',(data)=>{    
+    printMessage(data);
+    
+})
+
+const printMessage = (data)=>{
     let messageBox = document.createElement('div');
     let usernameContainer = document.createElement('div');
-    console.log(data);
     usernameContainer.appendChild(document.createTextNode(data.username));
     usernameContainer.classList = "username-container"
 
@@ -67,4 +76,4 @@ socket.on('getMessage',(data)=>{
     messageBox.appendChild(usernameContainer)
     messageBox.appendChild(document.createTextNode(data.message))
     chatContainer.appendChild(messageBox);
-})
+}
