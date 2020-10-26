@@ -25,7 +25,7 @@ const getRandomAvatar = ()=>{
 }
 
 io.on('connection',(socket)=>{
-    let avatar = getRandomAvatar();
+    let avatar = getRandomAvatar();    
     socket.on("login",(data)=>{
         userArray.push({
             id : socket.id,
@@ -45,15 +45,21 @@ io.on('connection',(socket)=>{
     })
    
     socket.on('disconnect',(data)=>{
-        console.log("User disconnected");
+        let disconnectedUser;
         if(userArray.length == 0){
             return
         }
+        if(userArray[getUserIndex(socket.id)].username){
+            disconnectedUser = userArray[getUserIndex(socket.id)].username;
+        }
+        else{
+            disconnectedUser = "Bot"
+        }
         io.emit("disconnection",{
             username : "🤖 Bot",
-            message: `💀 ${userArray[getUserIndex(socket.id)].username} has left the chat!`
+            message: `💀 ${disconnectedUser} has left the chat!`
         });
-        userArray.splice(getUserIndex(), 1);
+        userArray.splice(getUserIndex(socket.id), 1);
         console.log(userArray);
     })
 
