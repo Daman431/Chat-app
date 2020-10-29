@@ -1,7 +1,5 @@
 const socket = io();
 
-
-
 // Submit by enter
 
 document.getElementById("userMessage").addEventListener("keydown",(event)=>{
@@ -47,13 +45,12 @@ const sendMessage = ()=>{
         return null;
     }
     socket.emit('emitMessage',data);
-    document.getElementById("userMessage").value = ''
+    document.getElementById("userMessage").value = '';
 }
 
 //On disconnection
 
 socket.on("disconnection",(data)=>{
-    console.log(data)
     printMessage(data)
 })
 
@@ -70,7 +67,7 @@ const printMessage = (data)=>{
     let messageBox = document.createElement('div');
     let usernameContainer = document.createElement('div');
     usernameContainer.appendChild(document.createTextNode(data.username));
-    usernameContainer.classList = "username-container"
+    usernameContainer.classList = "username-container";
 
     messageBox.classList = 'message-container'
     messageBox.appendChild(usernameContainer)

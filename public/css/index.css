@@ -18,6 +18,9 @@
     box-shadow: 4px 8px 8px gray;
     padding: 20px;
 }
+.d-flex{
+    display: flex;
+}
 .main-container{
     width: 100%;
     display: flex;
@@ -101,3 +104,4 @@
           width: auto;
       }
   }
+  

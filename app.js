@@ -20,8 +20,7 @@ let emojiArray = [
 
 const getRandomAvatar = ()=>{
     randomIndex = Math.floor(Math.random()*emojiArray.length);
-    return String.fromCodePoint(emojiArray[randomIndex]);
-    
+    return String.fromCodePoint(emojiArray[randomIndex]); 
 }
 
 io.on('connection',(socket)=>{
@@ -32,6 +31,7 @@ io.on('connection',(socket)=>{
             username: data.username,
             avatar : avatar
         });
+        console.log(userArray);
         data.username = `${userArray[getUserIndex(socket.id)].avatar} ${data.username}`
         io.emit('getMessage',data);
     })
@@ -44,22 +44,19 @@ io.on('connection',(socket)=>{
         
     })
    
-    socket.on('disconnect',(data)=>{
+    socket.on('disconnect',()=>{
         let disconnectedUser;
         if(userArray.length == 0){
             return
         }
-        if(userArray[getUserIndex(socket.id)].username){
+        if(userArray[getUserIndex(socket.id)]){
             disconnectedUser = userArray[getUserIndex(socket.id)].username;
+            io.emit("disconnection",{
+                username : "🤖 Bot",
+                message: `💀 ${disconnectedUser} has left the chat!`
+            });
+            userArray.splice(getUserIndex(socket.id), 1);
         }
-        else{
-            disconnectedUser = "Bot"
-        }
-        io.emit("disconnection",{
-            username : "🤖 Bot",
-            message: `💀 ${disconnectedUser} has left the chat!`
-        });
-        userArray.splice(getUserIndex(socket.id), 1);
         console.log(userArray);
     })
 
